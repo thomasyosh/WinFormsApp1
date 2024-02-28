@@ -16,15 +16,26 @@ namespace WinFormsApp1.Controller
             this.user = _user;
         }
 
-        public void AddUser() {
+        public string AddUser() {
             user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);
-            db.Add(user);
-            db.SaveChanges();
+            User temp = db.Users.FirstOrDefault(x => x.UserName == user.UserName);
+            if (temp == null)
+            {
+                db.Add(user);
+                db.SaveChanges();
+                return "user create successfully";
+            }
+            else
+                return "duplicate use found";
+            
         }
 
         public bool isValidUser(User _user) {
-            User user = db.Users.FirstOrDefault(u => u.UserName == _user.UserName);        
-            return BCrypt.Net.BCrypt.Verify(_user.Password, user.Password);
+            User user = db.Users.FirstOrDefault(u => u.UserName == _user.UserName);
+            if (user != null)
+                return BCrypt.Net.BCrypt.Verify(_user.Password, user.Password);
+            else
+                return false;
         }
     }
 }

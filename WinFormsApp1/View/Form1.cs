@@ -24,9 +24,9 @@ namespace WinFormsApp1
         {
             User user = new User(textBox1.Text,textBox2.Text);
             UserController userController = new UserController(user);
-            //userController.AddUser();
+            //MessageBox.Show(userController.AddUser());
             bool result = userController.isValidUser(user);
-           MessageBox.Show(result.ToString());
+            MessageBox.Show(result.ToString());
         }
     }
 }
