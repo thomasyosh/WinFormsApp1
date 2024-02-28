@@ -14,7 +14,20 @@ namespace WinFormsApp1.Model
             optionsBuilder.UseSqlite("Data Source=D:\\testing.db");
         }
 
-        public DbSet<User> Users { get; set; }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Message>()
+                .HasMany(e => e.User)
+                .WithMany(e => e.Message)
+                .UsingEntity(
+                    "UserMessage",
+                    l => l.HasOne(typeof(User)).WithMany().HasForeignKey("UserId").HasPrincipalKey(nameof(User.UserId)),
+                    r => r.HasOne(typeof(Message)).WithMany().HasForeignKey("MessageId").HasPrincipalKey(nameof(Message.MessageId)),
+                    j => j.HasKey("UserId", "MessageId"));
+        }
 
+
+        public DbSet<User> Users { get; set; }
+       public DbSet<Message> messages { get; set; }
     }
 }

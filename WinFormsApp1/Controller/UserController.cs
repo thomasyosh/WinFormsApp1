@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
 using WinFormsApp1.Model;
@@ -27,8 +28,13 @@ namespace WinFormsApp1.Controller
             }
             else
                 return "duplicate use found";
-            
+
         }
+
+
+        public IQueryable<User> FindUser(){
+            return db.Users;
+    }
 
         public bool isValidUser(User _user) {
             User user = db.Users.FirstOrDefault(u => u.UserName == _user.UserName);

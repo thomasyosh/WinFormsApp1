@@ -14,6 +14,8 @@ namespace WinFormsApp1.Model
         public string UserName { get; set; }
         public string Password { get; set; }
 
+        public ICollection<Message> Message { get; set; } = new List<Message>();   
+
         public User(string UserName, string Password) { 
            Guid guid = Guid.NewGuid();
            this.UserId = guid.ToString();

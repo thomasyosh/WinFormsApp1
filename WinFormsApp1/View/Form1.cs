@@ -26,7 +26,10 @@ namespace WinFormsApp1
             UserController userController = new UserController(user);
             //MessageBox.Show(userController.AddUser());
             bool result = userController.isValidUser(user);
-            MessageBox.Show(result.ToString());
+            MessageController messageController;
+            if (result)
+                messageController = new MessageController(userController.FindUser());
+                
         }
     }
 }
